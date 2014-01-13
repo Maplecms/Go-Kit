@@ -4,14 +4,8 @@ import (
 	"testing"
 )
 
-func If(t *testing.T, message string, expression bool) {
+func Expect(t *testing.T, message string, expression bool) {
 	if !expression {
-		t.Error(message)
-	}
-}
-
-func Unless(t *testing.T, message string, expression bool) {
-	if expression {
 		t.Error(message)
 	}
 }

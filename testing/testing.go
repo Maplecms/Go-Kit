@@ -2,57 +2,51 @@ package testing
 
 import (
 	"testing"
-	"errors"
-	"fmt"
 )
 
-type Tplus struct {
-	testing.T
+func If(t *testing.T, message string, expression bool) {
+	if !expression {
+		t.Error(message)
+	}
 }
 
-func New(t *testing.T) *Tplus {
-	return &Tplus{*t}
+func Unless(t *testing.T, message string, expression bool) {
+	if expression {
+		t.Error(message)
+	}
 }
 
-func (self *Tplus) NoError(e error) {
+func NoError(t *testing.T, e error) {
 	if e != nil {
-		self.Error(e.Error())
+		t.Error(e.Error())
 	}
 }
 
-func Equal(x, y, interface {}) error {
+func Equal(t *testing.T, x, y interface {}) {
 	if x != y {
-		return errors.New(fmt.Sprintf("%v != %v", x, y))
+		t.Errorf("%v != %v", x, y)
 	}
-	return nil
 }
 
-func Inequal(x, y, interface{}) error {
+func Inequal(t *testing.T, x, y interface{}) {
 	if x == y {
-		return errors.New(fmt.Sprintf("%v == %v", x, y))
+		t.Errorf("%v == %v", x, y)
 	}
-	return nil
 }
 
-func SliceEqual(xs, ys, []interface{}) error {
+func BytesEqual(t *testing.T, xs, ys []byte) {
 	if len(xs) != len(ys) {
-		return errors.New(fmt.Sprintf("len(%v) != len(%v)", xs, ys))
+		t.Errorf("len(%v) != len(%v)", xs, ys)
 	}
 	for index, x := range xs {
-		y := ys[index]
-		if err := Equal(x, y); err != nil {
-			return err
+		Equal(t, x, ys[index])
+	}
+}
+
+func BytesInequal(t *testing.T, xs, ys []byte) {
+	if len(xs) == len(ys) {
+		for index, x := range xs {
+			Equal(t, x, ys[index])
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-

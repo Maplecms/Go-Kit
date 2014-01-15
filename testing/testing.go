@@ -17,7 +17,7 @@ func NoError(t *testing.T, e error) {
 	}
 }
 
-func DeepEqual(t, *testin.T, x, y interface{}) {
+func DeepEqual(t *testing.T, x, y interface{}) {
 	if !reflect.DeepEqual(x, y) {
 		t.Errorf("%v != %v", x, y)
 	}
@@ -32,6 +32,21 @@ func Equal(t *testing.T, x, y interface {}) {
 func Inequal(t *testing.T, x, y interface{}) {
 	if x == y {
 		t.Errorf("%v == %v", x, y)
+	}
+}
+
+func Contains(t *testing.T, xs []interface{}, y interface{}) {
+	for _, x := range xs {
+		if x == y {
+			return
+		}
+	}
+	t.Errorf("%v is not an element of %v", y, xs)
+}
+
+func ContentsEqual(t *testing.T, xs, ys, []interface{}) {
+	for _, x := range xs {
+		Contains(t, ys, x)
 	}
 }
 

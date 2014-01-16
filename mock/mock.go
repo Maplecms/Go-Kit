@@ -109,17 +109,18 @@ func AlphaString(length int) string {
 	return StringWithGenerator(length, Alpha)
 }
 
+func DigitString(length int) string {
+	return StringWithGenerator(legnth, Numeric)
+}
+
 func String(length int) string {
 	return StringWithGenerator(length, AlphaNumeric)
 }
 
-
-
-
-
-
-
-
-
-
+func VersionString() string {
+	major := DigitString(2)
+	minor := DigitString(2)
+	build := DigitString(2)
+	return major + "." + minor + "." + build
+}
 

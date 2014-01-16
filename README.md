@@ -1,4 +1,4 @@
-Go-Kit
+\Go-Kit
 ======
 
 Miscellaneous Golang Helpers

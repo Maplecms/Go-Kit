@@ -110,7 +110,7 @@ func AlphaString(length int) string {
 }
 
 func DigitString(length int) string {
-	return StringWithGenerator(legnth, Numeric)
+	return StringWithGenerator(length, Numeric)
 }
 
 func String(length int) string {

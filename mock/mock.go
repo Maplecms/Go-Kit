@@ -9,6 +9,21 @@ type Mocker interface {
 	Mock()
 }
 
+func IntBetween(a, b int) int {
+	size := b - a
+	return rand.Int() % size + a
+}
+
+func Float32Between(a, b float32) float32 {
+	size := b - a
+	return rand.Float32() * size + a
+}
+
+func Float64Between(a, b float64) float64 {
+	size := b - a
+	return rand.Float64() * size + a
+}
+
 func Name() string {
 	return Names[rand.Int() % len(Names)]
 }
@@ -29,13 +44,65 @@ func Email() string {
 	return Name() + Name() + "@" + CompanySanitized() + "." + Domain()
 }
 
+func OneOf(values ...interface{}) interface{} {
+	return values[rand.Int() % len(values)]
+}
 
+func CharacterIn(characters string) byte {
+	return characters[rand.Int() % len(characters)]
+}
 
+func LowerAlpha() byte {
+	return CharacterIn("abcdefghijklmnopqrstuvwxyz")
+}
 
+func UpperAlpha() byte {
+	return CharacterIn("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+}
 
+func Numeric() byte {
+	return CharacterIn("0123456789")
+}
 
+func Alpha() byte {
+	if rand.Int() % 2 == 0 {
+		return LowerAlpha()
+	} else {
+		return UpperAlpha()
+	}
+}
 
+func AlphaNumeric() byte {
+	if rand.Int() % 2 == 0 {
+		return Alpha()
+	} else {
+		return Numeric()
+	}
+}
 
+func StringWithGenerator(length int, generator func() byte) string {
+	result := make([]byte, length)
+	for i := 0; i < length; i ++ {
+		result[i] = generator()
+	}
+	return string(result)
+}
+
+func LowerString(length int) string {
+	return StringWithGenerator(length, LowerAlpha)
+}
+
+func UpperString(length int) string {
+	return StringWithGenerator(length, UpperAlpha)
+}
+
+func AlphaString(length int) string {
+	return StringWithGenerator(length, Alpha)
+}
+
+func String(length int) string {
+	return StringWithGenerator(length, AlphaNumeric)
+}
 
 
 

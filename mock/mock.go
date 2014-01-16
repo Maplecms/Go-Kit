@@ -3,6 +3,8 @@ package mock
 import (
 	"math/rand"
 	"strings"
+	"time"
+	"fmt"
 )
 
 type Mocker interface {
@@ -22,6 +24,13 @@ func Float32Between(a, b float32) float32 {
 func Float64Between(a, b float64) float64 {
 	size := b - a
 	return rand.Float64() * size + a
+}
+
+func TimeBetween(a, b time.Time) time.Time {
+	durationNanoSeconds := int64(rand.Int())  % b.Sub(a).Nanoseconds()
+	durationString := fmt.Sprintf("%dns", durationNanoSeconds)
+	duration, _ := time.ParseDuration(durationString)
+	return a.Add(duration)
 }
 
 func Name() string {
